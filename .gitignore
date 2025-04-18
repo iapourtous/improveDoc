@@ -1,0 +1,43 @@
+# Fichiers d'environnement
+.env
+
+# Fichiers Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Dossiers et fichiers virtuels
+venv/
+ENV/
+.venv/
+.env/
+.virtualenv/
+
+# Logs
+*.log
+logs/
+
+# IDE et éditeurs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
