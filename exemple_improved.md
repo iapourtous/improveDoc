@@ -1,0 +1,35 @@
+# Intelligence Artificielle
+
+## Histoire
+
+L'histoire de l'[intelligence artificielle](https://fr.wikipedia.org/wiki/Intelligence_artificielle) (IA) débute dans l'Antiquité, avec des mythes et des automates conçus par des artisans, comme le canard automate de Vaucanson au XVIIIe siècle ou les dispositifs d'Al-Jazari au Moyen Âge. Certains mythes rapportent la création d'êtres artificiels intelligents, tels que les golems. Des philosophes et mathématiciens comme Raymond Lulle, Leibniz ou George Boole ont cherché à formaliser le raisonnement et la génération d'idées.
+
+Au XXe siècle, [Alan Turing](https://fr.wikipedia.org/wiki/Alan_Turing) a inventé le modèle de calcul aujourd'hui appelé [machine de Turing](https://fr.wikipedia.org/wiki/Machine_de_Turing), exploré la notion de calculabilité et d'intelligence des machines, et proposé le « jeu de l'imitation » ([test de Turing](https://fr.wikipedia.org/wiki/Test_de_Turing)) pour évaluer l'intelligence des machines. Le terme « intelligence artificielle » a été introduit par [John McCarthy](https://fr.wikipedia.org/wiki/John_McCarthy) lors de la [conférence de Dartmouth](https://fr.wikipedia.org/wiki/Conf%C3%A9rence_de_Dartmouth) en 1956, qui a établi l'IA comme discipline à part entière. Dans les années qui ont suivi, plusieurs preuves de concept ont été proposées : par exemple, le programme ELIZA pouvait simuler un psychothérapeute, et le Logic Theorist pouvait démontrer des théorèmes.
+
+La fin du XXe siècle a été marquée par des périodes d'enthousiasme et deux « hivers de l'IA », périodes de désillusion et de réduction des financements, la première de 1974 à 1980 et la seconde de 1987 à 1993. Les systèmes experts ont connu un grand succès dans les années 1980, mais leur fragilité et la difficulté à maintenir leurs règles limitaient leur application. Parallèlement, des techniques d'apprentissage automatique, comme les réseaux de neurones, la rétropropagation et les algorithmes génétiques, ont été développées, mais leur efficacité était limitée par la puissance de calcul et le manque de données. De plus, certains domaines ont été exclus de l'IA à mesure que leurs solutions devenaient banales, phénomène appelé « effet IA ».
+
+Avec l'augmentation continue des performances informatiques, en 1997, le superordinateur [Deep Blue](https://fr.wikipedia.org/wiki/Deep_Blue) a battu le champion du monde d'échecs Garry Kasparov pour la première fois. Dans les années 2000, le Web 2.0, le big data et de nouvelles capacités de calcul ont permis d'explorer des masses de données sans précédent. En 2005, le projet Blue Brain a été lancé pour simuler le cerveau des mammifères. En 2012, le réseau neuronal convolutif AlexNet a popularisé l'utilisation des processeurs graphiques pour l'entraînement des réseaux de neurones, décuplant ainsi la puissance de calcul dédiée à l'apprentissage. La même année, le programme [AlphaGo](https://fr.wikipedia.org/wiki/AlphaGo) a remporté plusieurs parties de Go contre un joueur humain de niveau professionnel. Des organisations visant à créer une intelligence artificielle générale ont été fondées, comme [DeepMind](https://fr.wikipedia.org/wiki/DeepMind) en 2010 et [OpenAI](https://fr.wikipedia.org/wiki/OpenAI) en 2015.
+
+Depuis les années 2010, les outils d'IA, spécialisés ou génératifs, ont accompli des progrès spectaculaires, même si leurs performances restent loin de celles des êtres vivants dans de nombreuses aptitudes naturelles, notamment l'apprentissage rapide à partir de peu d'exemples (induction). En 2017, des chercheurs de Google ont proposé l'architecture transformeur, à la base des grands modèles de langage actuels. En 2018, Yann Le Cun, Yoshua Bengio et Geoffrey Hinton ont reçu le [prix Turing](https://fr.wikipedia.org/wiki/Prix_Turing) pour leurs travaux sur l'apprentissage profond. En 2022, des programmes générant des images à partir de descriptions textuelles comme Midjourney ou DALL-E 2 se sont popularisés. La même année, l'agent conversationnel [ChatGPT](https://fr.wikipedia.org/wiki/ChatGPT) a connu une croissance exceptionnelle, atteignant un million d'utilisateurs en cinq jours et cent millions en deux mois, accentuant la « course » à l'IA. En 2023, les progrès rapides de l'IA ont suscité des inquiétudes quant à un potentiel risque pour l'humanité. Des modèles dits multimodaux, capables de traiter simultanément plusieurs types de données (texte, image, son), ont émergé, comme Google Gemini et GPT-4o.
+
+## Applications
+
+Les applications de l'intelligence artificielle sont multiples et couvrent de nombreux domaines. Parmi les plus connues, on trouve :
+
+- Les systèmes de recommandation, utilisés par des plateformes comme Netflix ou Amazon pour proposer des contenus personnalisés.
+- La reconnaissance vocale et la traduction automatique, qui facilitent la communication entre langues différentes.
+- Les assistants personnels virtuels, tels que Siri, Alexa ou Google Assistant.
+- La vision par ordinateur, permettant la reconnaissance faciale, la détection d'objets, et la conduite autonome.
+- Le diagnostic médical assisté par IA, améliorant la précision des analyses et des traitements.
+- La robotique, avec des robots capables d'exécuter des tâches complexes dans l'industrie ou la vie quotidienne.
+- Les véhicules autonomes, qui utilisent des algorithmes pour naviguer sans intervention humaine directe.
+
+Ces applications s'appuient souvent sur des techniques d'apprentissage automatique, de réseaux de neurones profonds et de traitement du langage naturel, bénéficiant des progrès en matière de puissance de calcul et de disponibilité des données.
+
+## Défis
+
+Les avancées rapides dans le domaine de [l'intelligence artificielle](https://fr.wikipedia.org/wiki/Intelligence_artificielle) soulèvent plusieurs défis majeurs. Sur le plan éthique, il est crucial d'aborder les questions liées à [l'éthique](https://fr.wikipedia.org/wiki/%C3%89thique) de l'intelligence artificielle, notamment la responsabilité des décisions prises par les systèmes automatisés et le respect des droits fondamentaux. Les biais algorithmiques peuvent entraîner des discriminations, ce qui nécessite une vigilance constante pour garantir l'équité.
+
+D'un point de vue technique, la complexité des systèmes d'IA pose des défis en termes de transparence et d'explicabilité, rendant difficile la compréhension des mécanismes internes. La protection de la [vie privée](https://fr.wikipedia.org/wiki/Vie_priv%C3%A9e) est également un enjeu important, avec la collecte massive de données personnelles nécessaires à l'entraînement des modèles.
+
+Enfin, les implications sociales sont considérables, notamment en ce qui concerne l'[emploi](https://fr.wikipedia.org/wiki/Emploi) et la transformation des métiers. L'automatisation croissante pourrait provoquer des changements structurels dans le marché du travail, nécessitant des politiques adaptées pour accompagner cette transition.

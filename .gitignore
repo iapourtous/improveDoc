@@ -41,3 +41,6 @@ logs/
 *.swo
 *~
 .DS_Store
+
+# Scripts
+publish.sh

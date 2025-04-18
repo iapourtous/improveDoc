@@ -1,82 +1,74 @@
 # ImproveDoc
 
-Un outil en ligne de commande pour améliorer des documents Markdown avec des informations issues de Wikipedia en utilisant la puissance de CrewAI et des agents d'IA.
+**ImproveDoc** est un outil Python permettant de créer et d'améliorer des documents Markdown structurés grâce à l'intelligence artificielle (CrewAI) et à l'enrichissement automatique via Wikipedia.
 
 ## Fonctionnalités
 
-- **Enrichissement automatique** : Ajoute des informations pertinentes issues de Wikipedia
-- **Vérification factuelle** : Vérifie la véracité des affirmations dans le document
-- **Ajout de liens** : Transforme les termes importants en liens vers les articles Wikipedia correspondants
-- **Amélioration du format Markdown** : Assure une structure cohérente et lisible
+- Génération de documents Markdown structurés à partir d'un titre, d'un sujet et d'instructions personnalisées (`createDoc.py`)
+- Amélioration automatique de documents Markdown existants avec des informations issues de Wikipedia (`improvedoc.py`)
+- Agents spécialisés pour la rédaction, la vérification, l'enrichissement et l'édition de contenu (`lib/agents.py`)
+- Personnalisation du modèle LLM, de la langue Wikipedia et des paramètres via `.env`
 
 ## Installation
 
-### Prérequis
+1. Clonez ce dépôt :
+   ```sh
+   git clone <repo-url>
+   cd improveDoc
+   ```
 
-- Python 3.8 ou supérieur
-- Pip (gestionnaire de paquets Python)
+2. Installez les dépendances :
+   ```sh
+   python3 -m venv venv
+   source venv/bin/activate
+   pip install -r requirements.txt
+   ```
 
-### Installation des dépendances
-
-```bash
-pip install -r requirements.txt
-```
-
-## Configuration
-
-Créez un fichier `.env` à la racine du projet avec les variables d'environnement suivantes :
-
-```
-OPENAI_API_KEY=votre_clé_api_openai
-LLM_MODEL=gpt-3.5-turbo  # ou un autre modèle compatible
-LLM_TEMPERATURE=0.7
-LLM_MAX_TOKENS=4096
-```
+3. Configurez votre clé API dans `.env` (voir `.env.example`).
 
 ## Utilisation
 
-```bash
-python improvedoc.py chemin/vers/votre/fichier.md
+### Créer un document Markdown
+
+```sh
+python createDoc.py
 ```
+Suivez l'interface interactive pour saisir le titre, le sujet et les instructions.
 
-### Options
+### Améliorer un document Markdown existant
 
-- `-o, --output` : Spécifier le chemin du fichier de sortie (par défaut: nom_du_fichier_improved.md)
-- `--api-key` : Fournir directement la clé API (plutôt que via le fichier .env)
-- `--model` : Spécifier le modèle à utiliser (plutôt que celui défini dans .env)
-
-### Exemples
-
-```bash
-# Amélioration simple avec fichier de sortie par défaut
-python improvedoc.py document.md
-
-# Spécifier un fichier de sortie personnalisé
-python improvedoc.py document.md -o document_enrichi.md
-
-# Utiliser une clé API spécifique et un modèle alternatif
-python improvedoc.py document.md --api-key sk-xxxx --model gpt-4
+```sh
+python improvedoc.py <fichier.md>
 ```
+Le résultat sera enregistré dans `<fichier>_improved.md`.
 
-## Comment ça marche
+### Options avancées
 
-ImproveDoc utilise plusieurs agents spécialisés coordonnés par CrewAI :
+- `--api-key` : Spécifier une clé API OpenAI/OpenRouter
+- `--model` : Choisir le modèle LLM à utiliser
+- `--debug` : Activer le mode debug
 
-1. **Agent Chercheur** : Recherche des informations pertinentes sur Wikipedia pour enrichir le contenu
-2. **Agent Vérificateur de Faits** : Vérifie la véracité des affirmations dans le document
-3. **Agent Spécialiste des Liens** : Ajoute des liens vers les articles Wikipedia correspondants
-4. **Agent Éditeur Markdown** : Assure une structure cohérente et lisible
+## Exemples
 
-Ces agents travaillent séquentiellement sur chaque section du document pour produire un contenu enrichi et bien structuré.
+- `exemple.md` : Document de base généré
+- `exemple_improved.md` : Version enrichie automatiquement
+
+## Structure du projet
+
+- `createDoc.py` : Génération interactive de documents
+- `improvedoc.py` : Amélioration de documents existants
+- `lib/` : Modules internes (agents, outils, configuration, traitement Markdown)
+
+## Configuration
+
+Voir le fichier `lib/config.py` et `.env.example` pour les variables d'environnement à définir.
+
+## Dépendances principales
+
+- [CrewAI](https://github.com/joaomdmoura/crewAI)
+- [wikipedia](https://pypi.org/project/wikipedia/)
+- [python-dotenv](https://pypi.org/project/python-dotenv/)
 
 ## Licence
 
-MIT
-
-## Auteur
-
-[Votre nom]
-
-## Contributions
-
-Les contributions sont les bienvenues ! N'hésitez pas à ouvrir une issue ou une pull request.
+Ce projet est distribué sous licence MIT.
