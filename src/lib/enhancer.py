@@ -6,13 +6,18 @@ Ce module contient le service principal d'amélioration de contenu Markdown.
 
 import traceback
 from typing import Dict, List, Optional
+import os
 
 from crewai import Agent, Task, Crew, Process, LLM
+from crewai.memory import LongTermMemory, ShortTermMemory, EntityMemory
+from crewai.memory.storage.rag_storage import RAGStorage
+from crewai.memory.storage.ltm_sqlite_storage import LTMSQLiteStorage
 
 # Imports relatifs pour les modules du package
 from .config import Config
 from .agents import AgentFactory
 from .content_processor import MarkdownProcessor
+from .custom_embedder import MultilingualE5Embedder
 
 class ContentEnhancer:
     """
@@ -53,10 +58,51 @@ class ContentEnhancer:
                 model="openai/gpt-3.5-turbo"
             )
         
+        # Configuration du chemin de stockage pour la mémoire à partir du fichier .env
+        storage_path = os.getenv("CREWAI_STORAGE_DIR", "./storage")
+        os.makedirs(storage_path, exist_ok=True)
+        print(f"Stockage de la mémoire configuré dans: {storage_path}")
+        
+        # Configuration de l'embedder personnalisé
+        self.custom_embedder = MultilingualE5Embedder()
+        
+        # Configuration des mémoires
+        self.long_term_memory = LongTermMemory(
+            storage=LTMSQLiteStorage(
+                db_path=f"{storage_path}/improve_doc_ltm.db"
+            )
+        )
+        
+        self.short_term_memory = ShortTermMemory(
+            storage=RAGStorage(
+                embedder_config={
+                    "provider": "custom",
+                    "config": {
+                        "embedder": self.custom_embedder
+                    }
+                },
+                type="short_term",
+                path=f"{storage_path}/"
+            )
+        )
+        
+        self.entity_memory = EntityMemory(
+            storage=RAGStorage(
+                embedder_config={
+                    "provider": "custom",
+                    "config": {
+                        "embedder": self.custom_embedder
+                    }
+                },
+                type="entity",
+                path=f"{storage_path}/"
+            )
+        )
+        
         # Création de la factory d'agents avec la langue spécifiée
         self.agent_factory = AgentFactory(self.llm, wiki_language=self.config.wikipedia_language)
         
-        print(f"ContentEnhancer configuré avec modèle: {self.config.model}")
+        print(f"ContentEnhancer configuré avec modèle: {self.config.model} et mémoire activée")
     
     def _create_enrichment_task(self, agent: Agent, section_name: str, section_content: str) -> Task:
         """
@@ -260,13 +306,11 @@ class ContentEnhancer:
         
         # 2. Créer les agents
         research_agent = self.agent_factory.create_research_agent()
-        fact_checker_agent = self.agent_factory.create_fact_checker_agent()
         wiki_linker_agent = self.agent_factory.create_wiki_linker_agent()
         markdown_editor_agent = self.agent_factory.create_markdown_editor_agent()
         
         # 3. Générer dynamiquement les tâches pour chaque section
         enrichment_tasks = []
-        verification_tasks = []
         linking_tasks = []
         
         # Ordonner les sections par leur position originale dans le document
@@ -288,21 +332,37 @@ class ContentEnhancer:
             if not section_content.strip():
                 continue  # Ignorer les sections vides
             
-            # Tâche d'enrichissement pour cette section
+            # Tâche d'enrichissement pour cette section avec contexte de mémoire
+            task_description = f"""Enrichir la section "{section_name}" avec des informations pertinentes de Wikipédia.
+            
+            CONTEXTE MÉMOIRE:
+            - Utilise ta mémoire pour retrouver les informations pertinentes déjà recherchées
+            - Évite de rechercher des informations sur des concepts déjà traités dans d'autres sections
+            - Assure la cohérence avec les enrichissements déjà effectués
+            
+            CONTENU ACTUEL DE LA SECTION:
+            ```
+            {section_content}
+            ```
+            """
+            
             enrichment_task = self._create_enrichment_task(
                 research_agent, section_name, section_content
             )
             enrichment_tasks.append(enrichment_task)
             
-            # Tâche de vérification factuelle (dépend de l'enrichissement)
-            verification_task = self._create_verification_task(
-                fact_checker_agent, section_name, enrichment_task
-            )
-            verification_tasks.append(verification_task)
+            # Tâche d'ajout de liens (dépend de l'enrichissement) avec contexte de mémoire
+            link_task_description = f"""Ajouter des liens Wikipédia pertinents à la section "{section_name}".
             
-            # Tâche d'ajout de liens (dépend de la vérification)
+            CONTEXTE MÉMOIRE:
+            - Utilise ta mémoire pour retrouver les termes déjà liés dans d'autres sections
+            - Évite de créer des liens redondants pour les mêmes concepts
+            - Assure une cohérence globale dans le document
+            - Préfère lier des termes différents pour couvrir plus de concepts
+            """
+            
             linking_task = self._create_linking_task(
-                wiki_linker_agent, section_name, verification_task
+                wiki_linker_agent, section_name, enrichment_task
             )
             linking_tasks.append(linking_task)
             
@@ -312,17 +372,29 @@ class ContentEnhancer:
                 "section_data": section_data
             }
         
-        # 4. Tâche d'édition Markdown globale (après que toutes les sections aient été traitées)
+        # 4. Tâche d'édition Markdown globale avec contexte de mémoire
+        edit_task_description = f"""Assurer la qualité et la cohérence du format Markdown du document entier.
+        
+        CONTEXTE MÉMOIRE:
+        - Utilise ta mémoire pour maintenir une cohérence stylistique
+        - Applique les mêmes conventions de formatage que dans les documents précédents
+        - Assure-toi que le style de formatage est uniforme à travers tout le document
+        """
+        
         markdown_editing_task = self._create_editing_task(
             markdown_editor_agent, linking_tasks, original_structure
         )
         
-        # 5. Création et exécution de l'équipage
+        # 5. Création et exécution de l'équipage avec mémoire
         crew = Crew(
-            agents=[research_agent, fact_checker_agent, wiki_linker_agent, markdown_editor_agent],
-            tasks=enrichment_tasks + verification_tasks + linking_tasks + [markdown_editing_task],
+            agents=[research_agent, wiki_linker_agent, markdown_editor_agent],
+            tasks=enrichment_tasks + linking_tasks + [markdown_editing_task],
             verbose=True,
-            process=Process.sequential
+            process=Process.sequential,
+            memory=True,
+            long_term_memory=self.long_term_memory,
+            short_term_memory=self.short_term_memory,
+            entity_memory=self.entity_memory
         )
         
         try:
@@ -334,6 +406,28 @@ class ContentEnhancer:
             
             # Extraire le contenu final de la réponse
             markdown_content_improved = MarkdownProcessor.extract_final_content(result_text)
+
+            # ------------------------------------------------------------------
+            # Post‑traitement : éviter les sections vides ou placeholders
+            # ------------------------------------------------------------------
+            try:
+                improved_sections_map = MarkdownProcessor.parse_sections(markdown_content_improved)
+                updated = False
+                for sec_id, sec in improved_sections_map.items():
+                    content = sec.get("content", "").strip()
+                    orig_content = sections.get(sec_id, {}).get("content", "").strip()
+
+                    # Considérer la section « vide » si aucune phrase ou uniquement un placeholder HTML
+                    is_placeholder = content.startswith("<!--") or len(content) < 20
+                    if is_placeholder and orig_content:
+                        improved_sections_map[sec_id]["content"] = orig_content
+                        updated = True
+
+                if updated:
+                    markdown_content_improved = MarkdownProcessor.reassemble(improved_sections_map)
+            except Exception as _:
+                # Si le post‑traitement échoue, on garde la version telle quelle.
+                pass
             
             # Pour préserver la structure en cas de problème avec le LLM
             if not markdown_content_improved or len(markdown_content_improved) < 50:

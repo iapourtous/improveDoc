@@ -1,5 +1,7 @@
 # Intelligence Artificielle
 
+## Introduction
+
 L'intelligence artificielle est un domaine informatique qui vise à créer des systèmes capables de résoudre des problèmes normalement réservés à l'intelligence humaine.
 
 ## Histoire

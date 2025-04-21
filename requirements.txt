@@ -1,6 +1,0 @@
-crewai==0.114.0
-wikipedia>=1.4.0
-python-dotenv>=1.0.0
-argparse>=1.4.0
-litellm>=1.30.0
-langchain>=0.0.335

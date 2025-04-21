@@ -1,0 +1,28 @@
+---
+# Configuration par défaut pour ImproveDoc
+# Ce fichier définit les paramètres généraux et les valeurs par défaut
+
+# Configuration LLM
+llm:
+  temperature: 0.7
+  max_tokens: 4096
+  base_url: "https://openrouter.ai/api/v1"
+  default_model: "openrouter/openai/gpt-4.1-mini"
+
+# Configuration Wikipedia
+wikipedia:
+  language: "fr"
+  max_search_results: 5
+  default_summary_sentences: 3
+
+# Configuration de la mémoire
+memory:
+  storage_dir: "./improvedoc_memory"
+  embedder: "intfloat/multilingual-e5-large"
+  
+# Configuration du processus d'amélioration
+enhance:
+  max_sections: 10  # Limite le nombre de sections traitées pour la performance
+  preserve_structure: true  # Garantit que la structure originale est respectée
+  add_links: true  # Active l'ajout de liens Wikipédia
+  verify_facts: true  # Active la vérification factuelle

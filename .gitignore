@@ -15,6 +15,7 @@ downloads/
 eggs/
 .eggs/
 lib/
+!src/lib/
 lib64/
 parts/
 sdist/
@@ -41,6 +42,10 @@ logs/
 *.swo
 *~
 .DS_Store
+
+# Cache et mémoire
+improvedoc_memory/
+chroma.sqlite3
 
 # Scripts
 publish.sh

@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "improvedoc"
+version = "0.1.0"
+description = "Création et amélioration de documents Markdown structurés via CrewAI et Wikipedia"
+authors = [
+    { name = "Lemasson Patrick", email = "l.patrick74210@outlook.com" }
+]
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "crewai==0.114.0",
+    "wikipedia>=1.4.0",
+    "python-dotenv>=1.0.0",
+    "argparse>=1.4.0",
+    "litellm>=1.30.0",
+    "langchain>=0.0.335",
+    "sentence-transformers>=2.2.2",
+    "appdirs>=1.4.4",
+    "chromadb>=0.4.22"
+]
+
+[project.urls]
+Home = "https://github.com/ton-org/improvedoc"
+Issues = "https://github.com/ton-org/improvedoc/issues"
+
+[tool.setuptools]
+# Indique que les paquets sont dans src/
+package-dir = {"" = "src"}
+packages = ["improvedoc", "lib"]
