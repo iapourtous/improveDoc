@@ -15,7 +15,7 @@
 
 1. **Cloner le dépôt :**
    ```bash
-   git clone <repo-url>
+   git clone https://github.com/iapourtous/improveDoc.git
    cd improveDoc
    ```
 
