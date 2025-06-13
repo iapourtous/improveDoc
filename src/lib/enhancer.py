@@ -117,30 +117,41 @@ class ContentEnhancer:
             Tâche CrewAI
         """
         return Task(
-            description=f"""Enrichir la section "{section_name}" avec des informations pertinentes de Wikipédia.
+            description=f"""ENRICHIR SANS RACCOURCIR : Ajouter des informations Wikipédia à la section "{section_name}" tout en conservant INTÉGRALEMENT le contenu original.
             
-            CONTENU ACTUEL DE LA SECTION:
+            CONTENU ACTUEL DE LA SECTION À CONSERVER INTÉGRALEMENT:
             ```
             {section_content}
             ```
             
-            INSTRUCTIONS:
-            1. Identifie les aspects qui pourraient bénéficier d'informations supplémentaires
-            2. Recherche des informations pertinentes sur Wikipédia
-            3. Intègre harmonieusement ces informations dans le contenu existant
-            4. Conserve le style et le ton du contenu original
-            5. Ajoute des détails factuels, des exemples ou des explications supplémentaires
+            MISSION PRINCIPALE:
+            CONSERVER 100% du contenu original ET y ajouter des enrichissements Wikipédia pertinents.
             
-            CONTRAINTES STRICTES:
-            - Ne modifie PAS les listes à puces existantes, enrichis-les sans changer leur structure
-            - N'ajoute que des informations factuelles et vérifiables
-            - Maintiens la cohérence avec le reste du document
-            - IMPORTANT: Préserve absolument tous les points importants du contenu original
-            - Respecte la structure Markdown existante
-            - NE CRÉE PAS de nouvelles sous-sections, enrichis uniquement le contenu existant
-            - Si tu ajoutes des informations, ajoute-les en complément du contenu existant, pas en remplacement
+            INSTRUCTIONS DÉTAILLÉES:
+            1. CONSERVER INTÉGRALEMENT : Reproduis d'abord TOUT le contenu original tel quel, mot pour mot
+            2. IDENTIFIER : Repère les concepts, termes techniques ou sujets qui mériteraient d'être approfondis
+            3. RECHERCHER : Trouve des informations complémentaires sur Wikipédia
+            4. ENRICHIR : Ajoute ces nouvelles informations EN PLUS du contenu original, en les intégrant naturellement
+            5. CONTEXTUALISER : Lie les enrichissements au contenu existant avec des transitions fluides
             
-            Fournis UNIQUEMENT le contenu de section enrichi, sans ajouter de titre de section.
+            RÈGLES ABSOLUES - INTERDIT DE:
+            - Supprimer ou raccourcir le moindre élément du contenu original
+            - Remplacer des phrases existantes par des versions "améliorées"
+            - Réorganiser ou restructurer le contenu original
+            - Paraphraser ou reformuler les passages existants
+            - Créer de nouvelles sous-sections qui n'existaient pas
+            
+            RÈGLES OBLIGATOIRES - TU DOIS:
+            - Conserver chaque phrase, chaque liste, chaque détail du contenu original
+            - Ajouter les enrichissements APRÈS ou ENTRE les éléments existants
+            - Utiliser des formulations comme "De plus, selon Wikipédia...", "Il est également important de noter que...", "Pour approfondir ce point..."
+            - Préserver absolument la structure Markdown existante
+            - Maintenir le style et le ton du document original
+            
+            RÉSULTAT ATTENDU:
+            Le contenu original complet + des ajouts d'informations Wikipédia = Un contenu plus long et plus riche, jamais plus court.
+            
+            Fournis le contenu de section ENRICHI (original + ajouts), sans titre de section.
             """,
             agent=agent,
             expected_output=f"Section '{section_name}' enrichie avec des informations de Wikipédia"
@@ -159,25 +170,40 @@ class ContentEnhancer:
             Tâche CrewAI
         """
         return Task(
-            description=f"""Vérifie la véracité des affirmations dans la section "{section_name}" enrichie.
+            description=f"""VÉRIFIER SANS RÉDUIRE : Vérifier la véracité tout en conservant l'intégralité du contenu de la section "{section_name}" enrichie.
             
-            CONTENU DE LA SECTION ENRICHIE:
+            CONTENU DE LA SECTION ENRICHIE À PRÉSERVER:
             ```
             {{{{enrichment_task.output}}}}
             ```
             
+            MISSION PRINCIPALE:
+            Vérifier les faits SANS supprimer ou raccourcir le contenu existant.
+            
             INSTRUCTIONS:
-            1. Identifie les affirmations factuelles importantes dans le texte
-            2. Vérifie chaque affirmation par rapport à des sources fiables (Wikipédia)
-            3. Corrige les informations inexactes ou douteuses
-            4. Ajoute des nuances lorsque l'affirmation est trop catégorique
+            1. CONSERVER INTÉGRALEMENT : Reproduis tout le contenu reçu en entrée
+            2. IDENTIFIER : Repère les affirmations factuelles importantes à vérifier
+            3. VÉRIFIER : Contrôle chaque affirmation avec des sources fiables (Wikipédia)
+            4. CORRIGER SI NÉCESSAIRE : Uniquement si une information est manifestement fausse
+            5. NUANCER : Ajoute des précisions ou nuances si nécessaire, EN PLUS du contenu existant
             
-            CONTRAINTES:
-            - Corrige uniquement les erreurs factuelles, pas les questions de style
-            - Cite brièvement la source Wikipédia quand tu fais une correction majeure
-            - Maintiens le flux logique du texte
+            RÈGLES ABSOLUES - INTERDIT DE:
+            - Supprimer des phrases, paragraphes ou informations
+            - Raccourcir ou condenser le contenu
+            - Remplacer des formulations par des versions "plus correctes"
+            - Réorganiser la structure existante
             
-            Fournis la section complète avec les corrections apportées.
+            RÈGLES OBLIGATOIRES - TU DOIS:
+            - Préserver chaque élément du contenu reçu
+            - Ajouter les corrections ou nuances EN PLUS, pas EN REMPLACEMENT
+            - Utiliser des formulations comme "Précision importante:", "Note de vérification:", "Selon les sources actuelles..."
+            - Citer brièvement Wikipédia uniquement pour les corrections majeures
+            - Maintenir le flux logique et le style du texte
+            
+            RÉSULTAT ATTENDU:
+            Le contenu enrichi complet + éventuelles corrections/précisions = Jamais moins de contenu qu'en entrée.
+            
+            Fournis la section complète avec les vérifications effectuées.
             """,
             agent=agent,
             context=[enrichment_task],
@@ -197,27 +223,42 @@ class ContentEnhancer:
             Tâche CrewAI
         """
         return Task(
-            description=f"""Ajoute des liens Wikipédia pertinents dans la section "{section_name}".
+            description=f"""AJOUTER LIENS SANS MODIFIER : Ajouter des liens Wikipédia dans la section "{section_name}" sans altérer le contenu.
             
-            CONTENU DE LA SECTION VÉRIFIÉE:
+            CONTENU DE LA SECTION VÉRIFIÉE À PRÉSERVER INTÉGRALEMENT:
             ```
             {{{{verification_task.output}}}}
             ```
             
+            MISSION PRINCIPALE:
+            Ajouter des liens Wikipédia SANS modifier, supprimer ou raccourcir le moindre contenu textuel.
+            
             INSTRUCTIONS:
-            1. Identifie les termes, concepts et entités importants
-            2. Recherche les articles Wikipédia correspondants
-            3. Ajoute des liens Markdown au format [terme](https://fr.wikipedia.org/wiki/Page)
-            4. Priorise les termes les plus significatifs et pertinents
+            1. CONSERVER INTÉGRALEMENT : Reproduis tout le contenu textuel reçu, mot pour mot
+            2. IDENTIFIER : Repère les termes, concepts et entités qui méritent des liens
+            3. RECHERCHER : Trouve les articles Wikipédia correspondants les plus pertinents
+            4. LIER : Transforme uniquement les termes sélectionnés en liens Markdown [terme](https://fr.wikipedia.org/wiki/Page)
+            5. VÉRIFIER : Assure-toi qu'aucun contenu textuel n'a été perdu ou modifié
             
-            CONTRAINTES:
-            - Ne modifie pas le contenu textuel, ajoute seulement des liens
-            - Évite de lier des termes trop génériques
-            - Ne lie chaque terme que lors de sa première occurrence importante
-            - N'ajoute pas de liens dans les titres et sous-titres
-            - Limite-toi à 3-5 liens pertinents par section
+            RÈGLES ABSOLUES - INTERDIT DE:
+            - Modifier, supprimer ou raccourcir le moindre texte
+            - Reformuler des phrases pour "améliorer" le style
+            - Réorganiser la structure ou l'ordre du contenu
+            - Changer la ponctuation ou la formulation
+            - Supprimer des détails pour faire de la place aux liens
             
-            Fournis la section complète avec les liens ajoutés.
+            RÈGLES OBLIGATOIRES - TU DOIS:
+            - Conserver chaque mot, chaque phrase, chaque détail du contenu reçu
+            - Ajouter uniquement des liens en transformant les termes existants
+            - Éviter de lier des termes trop génériques ou évidents
+            - Privilégier la première occurrence significative de chaque terme
+            - Éviter les liens dans les titres et sous-titres
+            - Limiter à 3-5 liens pertinents par section pour ne pas surcharger
+            
+            RÉSULTAT ATTENDU:
+            Le contenu exact reçu en entrée + liens Wikipédia sur les termes appropriés = Même longueur de contenu avec liens enrichis.
+            
+            Fournis la section complète avec les liens ajoutés, sans aucune perte de contenu.
             """,
             agent=agent,
             context=[verification_task],
@@ -242,33 +283,47 @@ class ContentEnhancer:
             sections_description.append(f"Section {i+1}: {{{{linking_tasks[{i}].output}}}}")
         
         return Task(
-            description=f"""Assure la qualité et la cohérence du format Markdown du document entier 
-            en préservant EXACTEMENT la structure originale du document.
+            description=f"""ASSEMBLER SANS PERDRE : Finaliser le document en préservant TOUT le contenu enrichi et la structure originale.
             
-            STRUCTURE ORIGINALE DU DOCUMENT:
+            STRUCTURE ORIGINALE DU DOCUMENT À RESPECTER STRICTEMENT:
             ```
             {original_structure}
             ```
             
-            SECTIONS AMÉLIORÉES AVEC LIENS:
+            SECTIONS ENRICHIES AVEC LIENS À CONSERVER INTÉGRALEMENT:
             {chr(10).join(sections_description)}
             
+            MISSION PRINCIPALE:
+            Assembler un document final qui contient TOUT le contenu enrichi sans aucune perte.
+            
             INSTRUCTIONS:
-            1. Assure-toi que tous les titres originaux sont EXACTEMENT préservés (même niveau, même texte)
-            2. Vérifie que les listes sont bien formatées
-            3. Ajoute des sauts de ligne appropriés pour améliorer la lisibilité
-            4. Harmonise le style de formatage dans tout le document
+            1. CONSERVER INTÉGRALEMENT : Reproduis tout le contenu de chaque section enrichie, sans exception
+            2. STRUCTURER : Respecte exactement la hiérarchie de titres du document original
+            3. FORMATER : Améliore uniquement la présentation Markdown (sauts de ligne, espacement)
+            4. HARMONISER : Assure une cohérence stylistique sans supprimer de contenu
+            5. VÉRIFIER : Contrôle que tous les enrichissements et liens sont préservés
             
-            CONTRAINTES STRICTES:
-            - CRUCIAL: Préserve EXACTEMENT la structure de titres du document original
-            - NE PAS ajouter de nouveaux titres ou sections qui n'existaient pas dans l'original
-            - Préserve tout le contenu substantiel
-            - Conserve les liens Wikipédia ajoutés
-            - Ne modifie pas les informations factuelles importantes
-            - NE modifie PAS l'ordre des sections
+            RÈGLES ABSOLUES - INTERDIT DE:
+            - Supprimer, raccourcir ou condenser le moindre contenu enrichi
+            - Modifier les titres originaux (niveau ou texte)
+            - Réorganiser l'ordre des sections
+            - Éliminer des détails pour "améliorer" la lisibilité
+            - Supprimer des liens Wikipédia ajoutés
+            - Paraphraser ou reformuler le contenu existant
             
-            Fournis le document Markdown complet correctement formaté qui respecte STRICTEMENT
-            la structure originale.
+            RÈGLES OBLIGATOIRES - TU DOIS:
+            - Inclure chaque phrase, chaque liste, chaque enrichissement reçu
+            - Préserver tous les liens Wikipédia ajoutés par les agents précédents
+            - Maintenir la structure exacte de titres du document original
+            - Améliorer uniquement la présentation (espacement, formatage Markdown)
+            - Assurer la cohérence du style de formatage
+            - Créer un document PLUS LONG et PLUS RICHE que l'original
+            
+            RÉSULTAT ATTENDU:
+            Un document Markdown complet = contenu original + tous les enrichissements + tous les liens + formatage amélioré.
+            Le document final doit être significativement plus long et plus informatif que l'original.
+            
+            Fournis le document Markdown complet qui préserve TOUT le contenu enrichi.
             """,
             agent=agent,
             context=linking_tasks,
@@ -319,8 +374,8 @@ class ContentEnhancer:
             key=lambda x: x[1].get('original_position', 999)
         )
         
-        # Limiter le nombre de sections traitées si nécessaire
-        section_items = section_items[:5]  # Limiter à 5 sections pour la performance
+        # Traiter toutes les sections sans limitation pour préserver l'intégralité du document
+        # (Ancienne limitation supprimée pour éviter la troncature du contenu)
         
         # Dictionnaire pour suivre la correspondance entre tâches et sections originales
         task_to_section_map = {}
@@ -332,35 +387,13 @@ class ContentEnhancer:
             if not section_content.strip():
                 continue  # Ignorer les sections vides
             
-            # Tâche d'enrichissement pour cette section avec contexte de mémoire
-            task_description = f"""Enrichir la section "{section_name}" avec des informations pertinentes de Wikipédia.
-            
-            CONTEXTE MÉMOIRE:
-            - Utilise ta mémoire pour retrouver les informations pertinentes déjà recherchées
-            - Évite de rechercher des informations sur des concepts déjà traités dans d'autres sections
-            - Assure la cohérence avec les enrichissements déjà effectués
-            
-            CONTENU ACTUEL DE LA SECTION:
-            ```
-            {section_content}
-            ```
-            """
-            
+            # Tâche d'enrichissement pour cette section
             enrichment_task = self._create_enrichment_task(
                 research_agent, section_name, section_content
             )
             enrichment_tasks.append(enrichment_task)
             
-            # Tâche d'ajout de liens (dépend de l'enrichissement) avec contexte de mémoire
-            link_task_description = f"""Ajouter des liens Wikipédia pertinents à la section "{section_name}".
-            
-            CONTEXTE MÉMOIRE:
-            - Utilise ta mémoire pour retrouver les termes déjà liés dans d'autres sections
-            - Évite de créer des liens redondants pour les mêmes concepts
-            - Assure une cohérence globale dans le document
-            - Préfère lier des termes différents pour couvrir plus de concepts
-            """
-            
+            # Tâche d'ajout de liens (dépend de l'enrichissement)
             linking_task = self._create_linking_task(
                 wiki_linker_agent, section_name, enrichment_task
             )
@@ -372,15 +405,7 @@ class ContentEnhancer:
                 "section_data": section_data
             }
         
-        # 4. Tâche d'édition Markdown globale avec contexte de mémoire
-        edit_task_description = f"""Assurer la qualité et la cohérence du format Markdown du document entier.
-        
-        CONTEXTE MÉMOIRE:
-        - Utilise ta mémoire pour maintenir une cohérence stylistique
-        - Applique les mêmes conventions de formatage que dans les documents précédents
-        - Assure-toi que le style de formatage est uniforme à travers tout le document
-        """
-        
+        # 4. Tâche d'édition Markdown globale
         markdown_editing_task = self._create_editing_task(
             markdown_editor_agent, linking_tasks, original_structure
         )

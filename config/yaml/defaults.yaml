@@ -5,9 +5,9 @@
 # Configuration LLM
 llm:
   temperature: 0.7
-  max_tokens: 4096
+  max_tokens: 16384  # Augmenté pour permettre des enrichissements plus complets
   base_url: "https://openrouter.ai/api/v1"
-  default_model: "openrouter/openai/gpt-4.1-mini"
+  default_model: "openrouter/openrouter/anthropic/claude-sonnet-4"
 
 # Configuration Wikipedia
 wikipedia:
@@ -22,7 +22,7 @@ memory:
   
 # Configuration du processus d'amélioration
 enhance:
-  max_sections: 10  # Limite le nombre de sections traitées pour la performance
+  max_sections: 50  # Augmenté pour traiter des documents plus longs sans troncature
   preserve_structure: true  # Garantit que la structure originale est respectée
   add_links: true  # Active l'ajout de liens Wikipédia
   verify_facts: true  # Active la vérification factuelle
